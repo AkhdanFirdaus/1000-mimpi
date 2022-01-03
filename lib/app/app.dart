@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:seribu_mimpi/core/injection_container.dart';
+import '../core/injection_container.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
