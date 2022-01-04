@@ -24,9 +24,7 @@ class RegisterPage extends HookConsumerWidget {
 
     ref.listen<UserState>(userProvider, (prev, next) {
       next.map(
-        userGuest: (userGuest) {
-          namaController.text = userGuest.firstName + " " + userGuest.lastName;
-        },
+        userGuest: (userGuest) {},
         user: (value) {
           MotionToast.success(
             title: "Sukses Register",
@@ -54,7 +52,6 @@ class RegisterPage extends HookConsumerWidget {
         unauthenticated: (_) {
           context.router.root.push(const AuthWrapperRoute());
         },
-        eventOrganizer: (_) {},
       );
     });
 
@@ -65,122 +62,130 @@ class RegisterPage extends HookConsumerWidget {
             onTap: () {
               FocusScope.of(context).unfocus();
             },
-            child: SafeArea(
-              child: Form(
-                autovalidateMode: AutovalidateMode.always,
-                onChanged: () {
-                  isValid.value = namaController.text.isNotEmpty &&
-                      asalController.text.isNotEmpty &&
-                      telpController.text.isNotEmpty &&
-                      emailController.text.isNotEmpty &&
-                      passwordController.text.isNotEmpty;
-                },
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(36, 60, 36, 36),
-                  children: [
-                    Row(
-                      children: [
-                        BackButton(
-                          onPressed: () {
-                            getIt<AppRouter>().pop();
-                          },
-                        ),
-                        Text(
-                          "Buat Akun",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                    TextFormField(
-                      controller: namaController,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(hintText: "Name"),
-                    ),
-                    const SizedBox(height: 24),
-                    TextFormField(
-                      controller: asalController,
-                      maxLines: null,
-                      minLines: 4,
-                      keyboardType: TextInputType.multiline,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(hintText: "Asal"),
-                    ),
-                    const SizedBox(height: 24),
-                    TextFormField(
-                      controller: telpController,
-                      keyboardType: TextInputType.phone,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(hintText: "No Telp"),
-                    ),
-                    const SizedBox(height: 24),
-                    TextFormField(
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(hintText: "Email"),
-                    ),
-                    const SizedBox(height: 24),
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: !passwordVisible.value,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            passwordVisible.value = !passwordVisible.value;
-                          },
-                          icon: !passwordVisible.value
-                              ? const Icon(Icons.lock)
-                              : const Icon(Icons.lock_open),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/imgs/1.jpeg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: SafeArea(
+                child: Form(
+                  autovalidateMode: AutovalidateMode.always,
+                  onChanged: () {
+                    isValid.value = namaController.text.isNotEmpty &&
+                        asalController.text.isNotEmpty &&
+                        telpController.text.isNotEmpty &&
+                        emailController.text.isNotEmpty &&
+                        passwordController.text.isNotEmpty;
+                  },
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(36, 60, 36, 36),
+                    children: [
+                      Row(
+                        children: [
+                          BackButton(
+                            onPressed: () {
+                              getIt<AppRouter>().pop();
+                            },
+                          ),
+                          Text(
+                            "Buat Akun",
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        controller: namaController,
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(hintText: "Name"),
+                      ),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        controller: asalController,
+                        maxLines: null,
+                        minLines: 4,
+                        keyboardType: TextInputType.multiline,
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(hintText: "Asal"),
+                      ),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        controller: telpController,
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(hintText: "No Telp"),
+                      ),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(hintText: "Email"),
+                      ),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        controller: passwordController,
+                        obscureText: !passwordVisible.value,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              passwordVisible.value = !passwordVisible.value;
+                            },
+                            icon: !passwordVisible.value
+                                ? const Icon(Icons.lock)
+                                : const Icon(Icons.lock_open),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    ButtonBar(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
+                      const SizedBox(height: 24),
+                      ButtonBar(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                            ),
+                            child: const Text("Reset"),
                           ),
-                          child: const Text("Reset"),
-                        ),
-                        Builder(
-                          builder: (context) => ElevatedButton(
-                            onPressed: isValid.value && !isLoading.value
-                                ? () {
-                                    isLoading.value = true;
-                                    ref
-                                        .read(userProvider.notifier)
-                                        .registerUser(
-                                          name: namaController.text,
-                                          email: emailController.text,
-                                          nomorTelp: telpController.text,
-                                          password: passwordController.text,
-                                          asal: asalController.text,
-                                          role: 1,
-                                        )
-                                        .whenComplete(() {
-                                      isLoading.value = false;
-                                    });
-                                  }
-                                : null,
-                            child: isLoading.value
-                                ? SizedBox(
-                                    width: sy(12),
-                                    height: sy(12),
-                                    child: const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : const Text("Submit"),
+                          Builder(
+                            builder: (context) => ElevatedButton(
+                              onPressed: isValid.value && !isLoading.value
+                                  ? () {
+                                      isLoading.value = true;
+                                      ref
+                                          .read(userProvider.notifier)
+                                          .registerUser(
+                                            name: namaController.text,
+                                            email: emailController.text,
+                                            nomorTelp: telpController.text,
+                                            password: passwordController.text,
+                                            asal: asalController.text,
+                                            role: 1,
+                                          )
+                                          .whenComplete(() {
+                                        isLoading.value = false;
+                                      });
+                                    }
+                                  : null,
+                              child: isLoading.value
+                                  ? SizedBox(
+                                      width: sy(12),
+                                      height: sy(12),
+                                      child: const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : const Text("Submit"),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

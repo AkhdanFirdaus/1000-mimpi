@@ -7,17 +7,11 @@ part of 'user.dart';
 // **************************************************************************
 
 _$UserGuest _$$UserGuestFromJson(Map<String, dynamic> json) => _$UserGuest(
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      role: json['role'] as int,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$UserGuestToJson(_$UserGuest instance) =>
     <String, dynamic>{
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'role': instance.role,
       'runtimeType': instance.$type,
     };
 
@@ -32,29 +26,6 @@ _$User _$$UserFromJson(Map<String, dynamic> json) => _$User(
     );
 
 Map<String, dynamic> _$$UserToJson(_$User instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'email': instance.email,
-      'nomor_telp': instance.notelp,
-      'asal': instance.asal,
-      'role': instance.role,
-      'runtimeType': instance.$type,
-    };
-
-_$UserEventOrganizer _$$UserEventOrganizerFromJson(Map<String, dynamic> json) =>
-    _$UserEventOrganizer(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      email: json['email'] as String,
-      notelp: json['nomor_telp'] as String,
-      asal: json['asal'] as String,
-      role: json['role'] as int,
-      $type: json['runtimeType'] as String?,
-    );
-
-Map<String, dynamic> _$$UserEventOrganizerToJson(
-        _$UserEventOrganizer instance) =>
-    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'email': instance.email,

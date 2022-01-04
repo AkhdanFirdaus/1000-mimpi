@@ -27,22 +27,13 @@ class UserNotifier extends StateNotifier<UserState> {
     state = data.map(
       userGuest: (value) => value,
       user: (value) => value,
-      eventOrganizer: (value) => value,
       error: (value) => value,
       unauthenticated: (value) => value,
     );
   }
 
-  void loginGuest({
-    required String firstName,
-    required String lastName,
-    required int role,
-  }) {
-    final user = UserState.userGuest(
-      firstName: firstName,
-      lastName: lastName,
-      role: role,
-    );
+  void loginGuest() {
+    final user = UserState.userGuest();
     state = user;
   }
 
@@ -57,29 +48,6 @@ class UserNotifier extends StateNotifier<UserState> {
     try {
       final user = User.fromJson(response.data['data']);
       state = UserState.user(
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        notelp: user.notelp,
-        asal: user.asal,
-        role: user.role,
-      );
-    } catch (_) {
-      state = UserState.error("Invalid credential");
-    }
-  }
-
-  Future<void> loginCreator({
-    required String email,
-    required String password,
-  }) async {
-    final response = await api.post(ApiConst.login, data: {
-      'email': email,
-      'password': password,
-    });
-    try {
-      final user = User.fromJson(response.data['data']);
-      state = UserState.eventOrganizer(
         id: user.id,
         name: user.name,
         email: user.email,

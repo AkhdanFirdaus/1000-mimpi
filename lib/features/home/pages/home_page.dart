@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:relative_scale/relative_scale.dart';
 import 'package:seribu_mimpi/core/injection_container.dart';
 import 'package:seribu_mimpi/core/themes/app_color.dart';
+import 'package:seribu_mimpi/features/auth/controllers/user_controller.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isLogged = ref.watch(userProvider).maybeMap(
+          user: (_) => true,
+          orElse: () => false,
+        );
+
+    AutoRouter.of(context);
     return RelativeBuilder(
       builder: (context, width, height, sy, sx) {
         return Scaffold(
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {},
-            label: const Text("Buat Event"),
-            icon: const Icon(Icons.add),
-          ),
+          backgroundColor: Colors.transparent,
+          floatingActionButton: isLogged
+              ? FloatingActionButton.extended(
+                  onPressed: () {
+                    getIt<AppRouter>().pushNamed('event/create');
+                  },
+                  label: const Text("Buat Event"),
+                  icon: const Icon(Icons.add),
+                )
+              : null,
           body: SafeArea(
             child: ListView(
               children: [
@@ -31,7 +44,7 @@ class HomePage extends StatelessWidget {
                       ),
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(
-                        color: AppColor.pink,
+                        color: Colors.white,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(0),
                           bottomRight: Radius.circular(0),
@@ -93,7 +106,10 @@ class HomePage extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              const Text("24"),
+                              const CircleAvatar(
+                                radius: 24,
+                                child: Text("24"),
+                              ),
                               const SizedBox(height: 10),
                               Text("Webinar",
                                   style: Theme.of(context).textTheme.caption),
@@ -107,7 +123,10 @@ class HomePage extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              const Text("30"),
+                              const CircleAvatar(
+                                radius: 24,
+                                child: Text("30"),
+                              ),
                               const SizedBox(height: 10),
                               Text("Pembicara",
                                   style: Theme.of(context).textTheme.caption),
@@ -116,35 +135,82 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const Icon(Icons.bookmark),
-                              const SizedBox(height: 10),
-                              Text("Disimpan",
-                                  style: Theme.of(context).textTheme.caption),
-                            ],
+                        child: InkWell(
+                          onTap: () {
+                            getIt<AppRouter>()
+                                .pushNamed('event/list?title=Disimpan');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const CircleAvatar(
+                                  radius: 24,
+                                  child: Icon(Icons.bookmark),
+                                ),
+                                const SizedBox(height: 10),
+                                Text("Disimpan",
+                                    style: Theme.of(context).textTheme.caption),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const Icon(Icons.check),
-                              const SizedBox(height: 10),
-                              Text(
-                                "Diikuti",
-                                style: Theme.of(context).textTheme.caption,
+                      if (isLogged) ...[
+                        Card(
+                          child: InkWell(
+                            onTap: () {
+                              getIt<AppRouter>()
+                                  .pushNamed('event/list?title=Diikuti');
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(24.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  const CircleAvatar(
+                                    radius: 24,
+                                    child: Icon(Icons.check),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    "Diikuti",
+                                    style: Theme.of(context).textTheme.caption,
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
+                        Card(
+                          child: InkWell(
+                            onTap: () {
+                              getIt<AppRouter>()
+                                  .pushNamed('event/list?title=Kelola');
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(24.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  const CircleAvatar(
+                                    radius: 24,
+                                    child: Icon(Icons.manage_accounts),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    "Kelola Event",
+                                    style: Theme.of(context).textTheme.caption,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),

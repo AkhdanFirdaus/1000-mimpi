@@ -95,9 +95,7 @@ class HomeProfilePage extends HookConsumerWidget {
           user: (user) {
             return [
               ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: AppColor.purpleCalm,
-                ),
+                leading: const CircleAvatar(),
                 title: Text(user.name),
                 subtitle: Text(user.email),
                 trailing: IconButton(
@@ -111,7 +109,7 @@ class HomeProfilePage extends HookConsumerWidget {
               const SizedBox(height: 24),
               ListTile(
                 onTap: () {},
-                tileColor: Colors.grey.shade200,
+                tileColor: Colors.white,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
@@ -128,7 +126,7 @@ class HomeProfilePage extends HookConsumerWidget {
               const SizedBox(height: 24),
               ListTile(
                 onTap: () {},
-                tileColor: Colors.grey.shade200,
+                tileColor: Colors.white,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
@@ -142,7 +140,7 @@ class HomeProfilePage extends HookConsumerWidget {
               const SizedBox(height: 24),
               ListTile(
                 onTap: () {},
-                tileColor: Colors.grey.shade200,
+                tileColor: Colors.white,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
@@ -152,60 +150,6 @@ class HomeProfilePage extends HookConsumerWidget {
                 trailing: const Icon(
                   Icons.chevron_right,
                 ),
-              ),
-            ];
-          },
-          eventOrganizer: (creator) {
-            return [
-              Card(
-                child: InkWell(
-                  onTap: () {},
-                  child: Container(
-                    color: AppColor.pink,
-                    height: sy(80),
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Center(
-                      child:
-                          Text("Anda tidak login, silahkan klik untuk daftar"),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: Card(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Container(
-                          color: AppColor.pink,
-                          padding: const EdgeInsets.all(8.0),
-                          child: const Center(
-                            child: Text(
-                                "Anda tidak login, silahkan klik untuk daftar"),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Card(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Container(
-                          color: AppColor.pink,
-                          padding: const EdgeInsets.all(8.0),
-                          child: const Center(
-                            child: Text(
-                                "Anda tidak login, silahkan klik untuk daftar"),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ];
           },
@@ -232,6 +176,7 @@ class HomeProfilePage extends HookConsumerWidget {
           },
         );
         return Scaffold(
+          backgroundColor: Colors.transparent,
           body: SafeArea(
             child: ListView(
               padding: const EdgeInsets.all(24),
@@ -240,7 +185,7 @@ class HomeProfilePage extends HookConsumerWidget {
                 const SizedBox(height: 24),
                 ListTile(
                   onTap: () {},
-                  tileColor: Colors.grey.shade200,
+                  tileColor: Colors.white,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
                   ),
@@ -254,7 +199,7 @@ class HomeProfilePage extends HookConsumerWidget {
                 const SizedBox(height: 24),
                 ListTile(
                   onTap: () {},
-                  tileColor: Colors.grey.shade200,
+                  tileColor: Colors.white,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
                   ),

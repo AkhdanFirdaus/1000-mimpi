@@ -35,9 +35,6 @@ class AuthWrapperPage extends HookConsumerWidget {
           ).show(context);
         },
         unauthenticated: (_) {},
-        eventOrganizer: (_) {
-          context.router.root.replace(const HomeWrapperRoute());
-        },
       );
     });
     return const AutoRouter();

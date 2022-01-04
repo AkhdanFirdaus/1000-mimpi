@@ -20,8 +20,6 @@ UserState _$UserStateFromJson(Map<String, dynamic> json) {
       return UserGuest.fromJson(json);
     case 'user':
       return User.fromJson(json);
-    case 'eventOrganizer':
-      return UserEventOrganizer.fromJson(json);
     case 'error':
       return Error.fromJson(json);
     case 'unauthenticated':
@@ -37,15 +35,8 @@ UserState _$UserStateFromJson(Map<String, dynamic> json) {
 class _$UserStateTearOff {
   const _$UserStateTearOff();
 
-  UserGuest userGuest(
-      {required String firstName,
-      required String lastName,
-      required int role}) {
-    return UserGuest(
-      firstName: firstName,
-      lastName: lastName,
-      role: role,
-    );
+  UserGuest userGuest() {
+    return UserGuest();
   }
 
   User user(
@@ -56,23 +47,6 @@ class _$UserStateTearOff {
       @JsonKey(name: 'asal') required String asal,
       @JsonKey(name: 'role') required int role}) {
     return User(
-      id: id,
-      name: name,
-      email: email,
-      notelp: notelp,
-      asal: asal,
-      role: role,
-    );
-  }
-
-  UserEventOrganizer eventOrganizer(
-      {@JsonKey(name: 'id') required int id,
-      @JsonKey(name: 'name') required String name,
-      @JsonKey(name: 'email') required String email,
-      @JsonKey(name: 'nomor_telp') required String notelp,
-      @JsonKey(name: 'asal') required String asal,
-      @JsonKey(name: 'role') required int role}) {
-    return UserEventOrganizer(
       id: id,
       name: name,
       email: email,
@@ -104,8 +78,7 @@ const $UserState = _$UserStateTearOff();
 mixin _$UserState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String firstName, String lastName, int role)
-        userGuest,
+    required TResult Function() userGuest,
     required TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -114,21 +87,13 @@ mixin _$UserState {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)
         user,
-    required TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)
-        eventOrganizer,
     required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -137,21 +102,13 @@ mixin _$UserState {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -160,14 +117,6 @@ mixin _$UserState {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
@@ -177,7 +126,6 @@ mixin _$UserState {
   TResult map<TResult extends Object?>({
     required TResult Function(UserGuest value) userGuest,
     required TResult Function(User value) user,
-    required TResult Function(UserEventOrganizer value) eventOrganizer,
     required TResult Function(Error value) error,
     required TResult Function(Unauthenticated value) unauthenticated,
   }) =>
@@ -186,7 +134,6 @@ mixin _$UserState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
   }) =>
@@ -195,7 +142,6 @@ mixin _$UserState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
     required TResult orElse(),
@@ -223,7 +169,6 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
 abstract class $UserGuestCopyWith<$Res> {
   factory $UserGuestCopyWith(UserGuest value, $Res Function(UserGuest) then) =
       _$UserGuestCopyWithImpl<$Res>;
-  $Res call({String firstName, String lastName, int role});
 }
 
 /// @nodoc
@@ -234,85 +179,37 @@ class _$UserGuestCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 
   @override
   UserGuest get _value => super._value as UserGuest;
-
-  @override
-  $Res call({
-    Object? firstName = freezed,
-    Object? lastName = freezed,
-    Object? role = freezed,
-  }) {
-    return _then(UserGuest(
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: lastName == freezed
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      role: role == freezed
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$UserGuest implements UserGuest {
-  _$UserGuest(
-      {required this.firstName,
-      required this.lastName,
-      required this.role,
-      String? $type})
-      : $type = $type ?? 'userGuest';
+  _$UserGuest({String? $type}) : $type = $type ?? 'userGuest';
 
   factory _$UserGuest.fromJson(Map<String, dynamic> json) =>
       _$$UserGuestFromJson(json);
-
-  @override
-  final String firstName;
-  @override
-  final String lastName;
-  @override
-  final int role;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'UserState.userGuest(firstName: $firstName, lastName: $lastName, role: $role)';
+    return 'UserState.userGuest()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is UserGuest &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.role, role));
+        (other.runtimeType == runtimeType && other is UserGuest);
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(role));
-
-  @JsonKey(ignore: true)
-  @override
-  $UserGuestCopyWith<UserGuest> get copyWith =>
-      _$UserGuestCopyWithImpl<UserGuest>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String firstName, String lastName, int role)
-        userGuest,
+    required TResult Function() userGuest,
     required TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -321,24 +218,16 @@ class _$UserGuest implements UserGuest {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)
         user,
-    required TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)
-        eventOrganizer,
     required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) {
-    return userGuest(firstName, lastName, role);
+    return userGuest();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -347,24 +236,16 @@ class _$UserGuest implements UserGuest {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
   }) {
-    return userGuest?.call(firstName, lastName, role);
+    return userGuest?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -373,20 +254,12 @@ class _$UserGuest implements UserGuest {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
     if (userGuest != null) {
-      return userGuest(firstName, lastName, role);
+      return userGuest();
     }
     return orElse();
   }
@@ -396,7 +269,6 @@ class _$UserGuest implements UserGuest {
   TResult map<TResult extends Object?>({
     required TResult Function(UserGuest value) userGuest,
     required TResult Function(User value) user,
-    required TResult Function(UserEventOrganizer value) eventOrganizer,
     required TResult Function(Error value) error,
     required TResult Function(Unauthenticated value) unauthenticated,
   }) {
@@ -408,7 +280,6 @@ class _$UserGuest implements UserGuest {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
   }) {
@@ -420,7 +291,6 @@ class _$UserGuest implements UserGuest {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
     required TResult orElse(),
@@ -438,19 +308,9 @@ class _$UserGuest implements UserGuest {
 }
 
 abstract class UserGuest implements UserState {
-  factory UserGuest(
-      {required String firstName,
-      required String lastName,
-      required int role}) = _$UserGuest;
+  factory UserGuest() = _$UserGuest;
 
   factory UserGuest.fromJson(Map<String, dynamic> json) = _$UserGuest.fromJson;
-
-  String get firstName;
-  String get lastName;
-  int get role;
-  @JsonKey(ignore: true)
-  $UserGuestCopyWith<UserGuest> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -586,8 +446,7 @@ class _$User implements User {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String firstName, String lastName, int role)
-        userGuest,
+    required TResult Function() userGuest,
     required TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -596,14 +455,6 @@ class _$User implements User {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)
         user,
-    required TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)
-        eventOrganizer,
     required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) {
@@ -613,7 +464,7 @@ class _$User implements User {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -622,14 +473,6 @@ class _$User implements User {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
   }) {
@@ -639,7 +482,7 @@ class _$User implements User {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -648,14 +491,6 @@ class _$User implements User {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
@@ -671,7 +506,6 @@ class _$User implements User {
   TResult map<TResult extends Object?>({
     required TResult Function(UserGuest value) userGuest,
     required TResult Function(User value) user,
-    required TResult Function(UserEventOrganizer value) eventOrganizer,
     required TResult Function(Error value) error,
     required TResult Function(Unauthenticated value) unauthenticated,
   }) {
@@ -683,7 +517,6 @@ class _$User implements User {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
   }) {
@@ -695,7 +528,6 @@ class _$User implements User {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
     required TResult orElse(),
@@ -737,298 +569,6 @@ abstract class User implements UserState {
   int get role;
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $UserEventOrganizerCopyWith<$Res> {
-  factory $UserEventOrganizerCopyWith(
-          UserEventOrganizer value, $Res Function(UserEventOrganizer) then) =
-      _$UserEventOrganizerCopyWithImpl<$Res>;
-  $Res call(
-      {@JsonKey(name: 'id') int id,
-      @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'email') String email,
-      @JsonKey(name: 'nomor_telp') String notelp,
-      @JsonKey(name: 'asal') String asal,
-      @JsonKey(name: 'role') int role});
-}
-
-/// @nodoc
-class _$UserEventOrganizerCopyWithImpl<$Res>
-    extends _$UserStateCopyWithImpl<$Res>
-    implements $UserEventOrganizerCopyWith<$Res> {
-  _$UserEventOrganizerCopyWithImpl(
-      UserEventOrganizer _value, $Res Function(UserEventOrganizer) _then)
-      : super(_value, (v) => _then(v as UserEventOrganizer));
-
-  @override
-  UserEventOrganizer get _value => super._value as UserEventOrganizer;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? email = freezed,
-    Object? notelp = freezed,
-    Object? asal = freezed,
-    Object? role = freezed,
-  }) {
-    return _then(UserEventOrganizer(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      notelp: notelp == freezed
-          ? _value.notelp
-          : notelp // ignore: cast_nullable_to_non_nullable
-              as String,
-      asal: asal == freezed
-          ? _value.asal
-          : asal // ignore: cast_nullable_to_non_nullable
-              as String,
-      role: role == freezed
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$UserEventOrganizer implements UserEventOrganizer {
-  _$UserEventOrganizer(
-      {@JsonKey(name: 'id') required this.id,
-      @JsonKey(name: 'name') required this.name,
-      @JsonKey(name: 'email') required this.email,
-      @JsonKey(name: 'nomor_telp') required this.notelp,
-      @JsonKey(name: 'asal') required this.asal,
-      @JsonKey(name: 'role') required this.role,
-      String? $type})
-      : $type = $type ?? 'eventOrganizer';
-
-  factory _$UserEventOrganizer.fromJson(Map<String, dynamic> json) =>
-      _$$UserEventOrganizerFromJson(json);
-
-  @override
-  @JsonKey(name: 'id')
-  final int id;
-  @override
-  @JsonKey(name: 'name')
-  final String name;
-  @override
-  @JsonKey(name: 'email')
-  final String email;
-  @override
-  @JsonKey(name: 'nomor_telp')
-  final String notelp;
-  @override
-  @JsonKey(name: 'asal')
-  final String asal;
-  @override
-  @JsonKey(name: 'role')
-  final int role;
-
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
-  @override
-  String toString() {
-    return 'UserState.eventOrganizer(id: $id, name: $name, email: $email, notelp: $notelp, asal: $asal, role: $role)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is UserEventOrganizer &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.notelp, notelp) &&
-            const DeepCollectionEquality().equals(other.asal, asal) &&
-            const DeepCollectionEquality().equals(other.role, role));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(notelp),
-      const DeepCollectionEquality().hash(asal),
-      const DeepCollectionEquality().hash(role));
-
-  @JsonKey(ignore: true)
-  @override
-  $UserEventOrganizerCopyWith<UserEventOrganizer> get copyWith =>
-      _$UserEventOrganizerCopyWithImpl<UserEventOrganizer>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String firstName, String lastName, int role)
-        userGuest,
-    required TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)
-        user,
-    required TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)
-        eventOrganizer,
-    required TResult Function(String message) error,
-    required TResult Function() unauthenticated,
-  }) {
-    return eventOrganizer(id, name, email, notelp, asal, role);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
-    TResult Function(String message)? error,
-    TResult Function()? unauthenticated,
-  }) {
-    return eventOrganizer?.call(id, name, email, notelp, asal, role);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
-    TResult Function(String message)? error,
-    TResult Function()? unauthenticated,
-    required TResult orElse(),
-  }) {
-    if (eventOrganizer != null) {
-      return eventOrganizer(id, name, email, notelp, asal, role);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(UserGuest value) userGuest,
-    required TResult Function(User value) user,
-    required TResult Function(UserEventOrganizer value) eventOrganizer,
-    required TResult Function(Error value) error,
-    required TResult Function(Unauthenticated value) unauthenticated,
-  }) {
-    return eventOrganizer(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserGuest value)? userGuest,
-    TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
-    TResult Function(Error value)? error,
-    TResult Function(Unauthenticated value)? unauthenticated,
-  }) {
-    return eventOrganizer?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(UserGuest value)? userGuest,
-    TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
-    TResult Function(Error value)? error,
-    TResult Function(Unauthenticated value)? unauthenticated,
-    required TResult orElse(),
-  }) {
-    if (eventOrganizer != null) {
-      return eventOrganizer(this);
-    }
-    return orElse();
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$UserEventOrganizerToJson(this);
-  }
-}
-
-abstract class UserEventOrganizer implements UserState {
-  factory UserEventOrganizer(
-      {@JsonKey(name: 'id') required int id,
-      @JsonKey(name: 'name') required String name,
-      @JsonKey(name: 'email') required String email,
-      @JsonKey(name: 'nomor_telp') required String notelp,
-      @JsonKey(name: 'asal') required String asal,
-      @JsonKey(name: 'role') required int role}) = _$UserEventOrganizer;
-
-  factory UserEventOrganizer.fromJson(Map<String, dynamic> json) =
-      _$UserEventOrganizer.fromJson;
-
-  @JsonKey(name: 'id')
-  int get id;
-  @JsonKey(name: 'name')
-  String get name;
-  @JsonKey(name: 'email')
-  String get email;
-  @JsonKey(name: 'nomor_telp')
-  String get notelp;
-  @JsonKey(name: 'asal')
-  String get asal;
-  @JsonKey(name: 'role')
-  int get role;
-  @JsonKey(ignore: true)
-  $UserEventOrganizerCopyWith<UserEventOrganizer> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1098,8 +638,7 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String firstName, String lastName, int role)
-        userGuest,
+    required TResult Function() userGuest,
     required TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -1108,14 +647,6 @@ class _$Error implements Error {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)
         user,
-    required TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)
-        eventOrganizer,
     required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) {
@@ -1125,7 +656,7 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -1134,14 +665,6 @@ class _$Error implements Error {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
   }) {
@@ -1151,7 +674,7 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -1160,14 +683,6 @@ class _$Error implements Error {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
@@ -1183,7 +698,6 @@ class _$Error implements Error {
   TResult map<TResult extends Object?>({
     required TResult Function(UserGuest value) userGuest,
     required TResult Function(User value) user,
-    required TResult Function(UserEventOrganizer value) eventOrganizer,
     required TResult Function(Error value) error,
     required TResult Function(Unauthenticated value) unauthenticated,
   }) {
@@ -1195,7 +709,6 @@ class _$Error implements Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
   }) {
@@ -1207,7 +720,6 @@ class _$Error implements Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
     required TResult orElse(),
@@ -1280,8 +792,7 @@ class _$Unauthenticated implements Unauthenticated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String firstName, String lastName, int role)
-        userGuest,
+    required TResult Function() userGuest,
     required TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -1290,14 +801,6 @@ class _$Unauthenticated implements Unauthenticated {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)
         user,
-    required TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)
-        eventOrganizer,
     required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) {
@@ -1307,7 +810,7 @@ class _$Unauthenticated implements Unauthenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -1316,14 +819,6 @@ class _$Unauthenticated implements Unauthenticated {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
   }) {
@@ -1333,7 +828,7 @@ class _$Unauthenticated implements Unauthenticated {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String firstName, String lastName, int role)? userGuest,
+    TResult Function()? userGuest,
     TResult Function(
             @JsonKey(name: 'id') int id,
             @JsonKey(name: 'name') String name,
@@ -1342,14 +837,6 @@ class _$Unauthenticated implements Unauthenticated {
             @JsonKey(name: 'asal') String asal,
             @JsonKey(name: 'role') int role)?
         user,
-    TResult Function(
-            @JsonKey(name: 'id') int id,
-            @JsonKey(name: 'name') String name,
-            @JsonKey(name: 'email') String email,
-            @JsonKey(name: 'nomor_telp') String notelp,
-            @JsonKey(name: 'asal') String asal,
-            @JsonKey(name: 'role') int role)?
-        eventOrganizer,
     TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
@@ -1365,7 +852,6 @@ class _$Unauthenticated implements Unauthenticated {
   TResult map<TResult extends Object?>({
     required TResult Function(UserGuest value) userGuest,
     required TResult Function(User value) user,
-    required TResult Function(UserEventOrganizer value) eventOrganizer,
     required TResult Function(Error value) error,
     required TResult Function(Unauthenticated value) unauthenticated,
   }) {
@@ -1377,7 +863,6 @@ class _$Unauthenticated implements Unauthenticated {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
   }) {
@@ -1389,7 +874,6 @@ class _$Unauthenticated implements Unauthenticated {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserGuest value)? userGuest,
     TResult Function(User value)? user,
-    TResult Function(UserEventOrganizer value)? eventOrganizer,
     TResult Function(Error value)? error,
     TResult Function(Unauthenticated value)? unauthenticated,
     required TResult orElse(),

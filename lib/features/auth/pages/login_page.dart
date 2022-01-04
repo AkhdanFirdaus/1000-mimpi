@@ -22,94 +22,99 @@ class LoginPage extends HookConsumerWidget {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: Scaffold(
-            body: SafeArea(
-              child: Form(
-                autovalidateMode: AutovalidateMode.always,
-                onChanged: () {
-                  isValid2.value = emailController.text.isNotEmpty &&
-                      passwordController.text.isNotEmpty;
-                },
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(36, 60, 36, 36),
-                  children: [
-                    Row(
-                      children: [
-                        const BackButton(),
-                        Text(
-                          "Login",
-                          style: Theme.of(context).textTheme.headline4,
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/imgs/1.jpeg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: SafeArea(
+                child: Form(
+                  autovalidateMode: AutovalidateMode.always,
+                  onChanged: () {
+                    isValid2.value = emailController.text.isNotEmpty &&
+                        passwordController.text.isNotEmpty;
+                  },
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(36, 60, 36, 36),
+                    children: [
+                      Row(
+                        children: [
+                          const BackButton(),
+                          Text(
+                            "Login",
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(hintText: "Email"),
+                      ),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        controller: passwordController,
+                        textInputAction: TextInputAction.done,
+                        obscureText: !isVisible.value,
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              isVisible.value = !isVisible.value;
+                            },
+                            icon: isVisible.value
+                                ? const Icon(Icons.lock_open)
+                                : const Icon(Icons.lock),
+                          ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                    TextFormField(
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(hintText: "Email"),
-                    ),
-                    const SizedBox(height: 24),
-                    TextFormField(
-                      controller: passwordController,
-                      textInputAction: TextInputAction.done,
-                      obscureText: !isVisible.value,
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        suffixIcon: IconButton(
+                      ),
+                      const SizedBox(height: 24),
+                      FractionallySizedBox(
+                        widthFactor: 1,
+                        child: ElevatedButton(
+                          onPressed: isValid2.value && !isLoading.value
+                              ? () {
+                                  isLoading.value = true;
+                                  ref
+                                      .read(userProvider.notifier)
+                                      .loginUser(
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                      )
+                                      .whenComplete(() {
+                                    isLoading.value = false;
+                                  });
+                                }
+                              : null,
+                          child: isLoading.value
+                              ? SizedBox(
+                                  width: sy(12),
+                                  height: sy(12),
+                                  child: const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : const Text("Masuk"),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      FractionallySizedBox(
+                        widthFactor: 1,
+                        child: TextButton(
                           onPressed: () {
-                            isVisible.value = !isVisible.value;
+                            ref.read(userProvider.notifier).loginGuest();
                           },
-                          icon: isVisible.value
-                              ? const Icon(Icons.lock_open)
-                              : const Icon(Icons.lock),
+                          child: const Text("Masuk Sebagai Tamu"),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    FractionallySizedBox(
-                      widthFactor: 1,
-                      child: ElevatedButton(
-                        onPressed: isValid2.value && !isLoading.value
-                            ? () {
-                                isLoading.value = true;
-                                ref
-                                    .read(userProvider.notifier)
-                                    .loginUser(
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                    )
-                                    .whenComplete(() {
-                                  isLoading.value = false;
-                                });
-                              }
-                            : null,
-                        child: isLoading.value
-                            ? SizedBox(
-                                width: sy(12),
-                                height: sy(12),
-                                child: const CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                            : const Text("Masuk"),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    FractionallySizedBox(
-                      widthFactor: 1,
-                      child: TextButton(
-                        onPressed: () {
-                          ref.read(userProvider.notifier).loginGuest(
-                                firstName: "Akhdan",
-                                lastName: "Firdaus",
-                                role: 0,
-                              );
-                        },
-                        child: const Text("Masuk Sebagai Tamu"),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

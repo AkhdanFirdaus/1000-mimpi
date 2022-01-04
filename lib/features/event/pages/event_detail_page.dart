@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:relative_scale/relative_scale.dart';
 import 'package:seribu_mimpi/core/themes/app_color.dart';
+import 'package:seribu_mimpi/features/auth/index.dart';
 import '../../../core/injection_container.dart';
 
-class EventDetailPage extends StatelessWidget {
+class EventDetailPage extends HookConsumerWidget {
   const EventDetailPage({Key? key, @PathParam('id') required this.id})
       : super(key: key);
 
   final int id;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isLogged = ref.watch(userProvider).maybeMap(
+          user: (_) => true,
+          orElse: () => false,
+        );
     return RelativeBuilder(builder: (context, width, height, sy, sx) {
       AutoRouter.of(context);
       return Scaffold(
@@ -145,23 +151,34 @@ class EventDetailPage extends StatelessWidget {
                       subtitle: const Text("email@email.com"),
                       trailing: const Icon(Icons.chevron_right),
                     ),
-                    const SizedBox(height: 24),
+                    if (isLogged) ...[
+                      const SizedBox(height: 24),
+                      const Text("Link Meet"),
+                      const SizedBox(height: 8),
+                      ListTile(
+                        onTap: () {},
+                        leading: const Icon(Icons.link),
+                        title: const SelectableText(
+                            "https://meet.google.com/asdas-dasd-d"),
+                      ),
+                    ]
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(24),
-                child: FractionallySizedBox(
-                  widthFactor: 1,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text("Join Now"),
+              if (isLogged)
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: FractionallySizedBox(
+                    widthFactor: 1,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text("Join Now"),
+                      ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         ),

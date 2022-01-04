@@ -77,6 +77,31 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const EventPage());
     },
+    EventCreateRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const EventCreatePage());
+    },
+    EventUpdateRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<EventUpdateRouteArgs>(
+          orElse: () => EventUpdateRouteArgs(id: pathParams.getInt('id')));
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: EventUpdatePage(key: args.key, id: args.id));
+    },
+    EventManageRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const EventManagePage());
+    },
+    EventListRoute.name: (routeData) {
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<EventListRouteArgs>(
+          orElse: () => EventListRouteArgs(
+              title: queryParams.getString('title', "Event")));
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: EventListPage(key: args.key, title: args.title));
+    },
     EventDetailRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<EventDetailRouteArgs>(
@@ -136,6 +161,14 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(EventWrapperRoute.name, path: 'event', children: [
           RouteConfig(EventRoute.name,
               path: '', parent: EventWrapperRoute.name),
+          RouteConfig(EventCreateRoute.name,
+              path: 'create', parent: EventWrapperRoute.name),
+          RouteConfig(EventUpdateRoute.name,
+              path: ':id/update', parent: EventWrapperRoute.name),
+          RouteConfig(EventManageRoute.name,
+              path: 'manage', parent: EventWrapperRoute.name),
+          RouteConfig(EventListRoute.name,
+              path: 'list', parent: EventWrapperRoute.name),
           RouteConfig(EventDetailRoute.name,
               path: ':id', parent: EventWrapperRoute.name)
         ]),
@@ -283,6 +316,72 @@ class EventRoute extends PageRouteInfo<void> {
   const EventRoute() : super(EventRoute.name, path: '');
 
   static const String name = 'EventRoute';
+}
+
+/// generated route for
+/// [EventCreatePage]
+class EventCreateRoute extends PageRouteInfo<void> {
+  const EventCreateRoute() : super(EventCreateRoute.name, path: 'create');
+
+  static const String name = 'EventCreateRoute';
+}
+
+/// generated route for
+/// [EventUpdatePage]
+class EventUpdateRoute extends PageRouteInfo<EventUpdateRouteArgs> {
+  EventUpdateRoute({Key? key, required int id})
+      : super(EventUpdateRoute.name,
+            path: ':id/update',
+            args: EventUpdateRouteArgs(key: key, id: id),
+            rawPathParams: {'id': id});
+
+  static const String name = 'EventUpdateRoute';
+}
+
+class EventUpdateRouteArgs {
+  const EventUpdateRouteArgs({this.key, required this.id});
+
+  final Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'EventUpdateRouteArgs{key: $key, id: $id}';
+  }
+}
+
+/// generated route for
+/// [EventManagePage]
+class EventManageRoute extends PageRouteInfo<void> {
+  const EventManageRoute() : super(EventManageRoute.name, path: 'manage');
+
+  static const String name = 'EventManageRoute';
+}
+
+/// generated route for
+/// [EventListPage]
+class EventListRoute extends PageRouteInfo<EventListRouteArgs> {
+  EventListRoute({Key? key, String title = "Event"})
+      : super(EventListRoute.name,
+            path: 'list',
+            args: EventListRouteArgs(key: key, title: title),
+            rawQueryParams: {'title': title});
+
+  static const String name = 'EventListRoute';
+}
+
+class EventListRouteArgs {
+  const EventListRouteArgs({this.key, this.title = "Event"});
+
+  final Key? key;
+
+  final String title;
+
+  @override
+  String toString() {
+    return 'EventListRouteArgs{key: $key, title: $title}';
+  }
 }
 
 /// generated route for

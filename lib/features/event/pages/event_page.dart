@@ -81,26 +81,27 @@ class EventPage extends StatelessWidget {
                           onTap: () {
                             getIt<AppRouter>().pushNamed("event/$index");
                           },
-                          child: Column(
+                          child: ListView(
                             children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Center(
-                                    child: Text(
-                                      "Lorem Ipsum Dolor Sit Amet $index",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
+                              const ListTile(
+                                title: Text("Nama Event"),
+                              ),
+                              ListTile(
+                                title: const Text("Free"),
+                                subtitle: Text(
+                                  "Biaya",
+                                  style: Theme.of(context).textTheme.caption,
                                 ),
+                                trailing: const Icon(Icons.calendar_today),
                               ),
                               const ListTile(
-                                leading: Icon(Icons.calendar_today),
-                                title: Text(
-                                  "24/03/22",
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
+                                title: Text("Tanggal"),
+                                subtitle: Text("2021/07/03"),
+                              ),
+                              const ListTile(
+                                title: Text("Durasi"),
+                                subtitle: Text("2 jam"),
+                              ),
                             ],
                           ),
                         ),

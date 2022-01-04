@@ -11,35 +11,83 @@ class SelectUserPage extends StatelessWidget {
       builder: (context, width, height, sy, sx) {
         return Scaffold(
           body: SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    child: Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          getIt<AppRouter>().pushNamed('login');
-                        },
-                        child: const Text("Login"),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/imgs/1.jpeg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Card(
+                        child: InkWell(
+                          onTap: () {},
+                          child: SizedBox(
+                            width: sy(140),
+                            height: sy(140),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  const Text(
+                                    "Masuk ke aplikasi untuk melihat banyak mimpi",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      getIt<AppRouter>().pushNamed('login');
+                                    },
+                                    child: const Text("Login"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    color: Colors.grey.shade100,
-                    child: Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          getIt<AppRouter>().pushNamed('register');
-                        },
-                        child: const Text("Register"),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Card(
+                        child: InkWell(
+                          onTap: () {},
+                          child: SizedBox(
+                            width: sy(140),
+                            height: sy(140),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  const Text(
+                                    "Buat akun untuk menggapai mimpi",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      getIt<AppRouter>().pushNamed('register');
+                                    },
+                                    child: const Text("Register"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

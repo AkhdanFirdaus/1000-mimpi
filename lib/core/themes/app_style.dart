@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class AppStyle {
   static const borderRadius = BorderRadius.all(Radius.circular(8));
 
-  static final inputTheme = InputDecorationTheme(
+  static const inputTheme = InputDecorationTheme(
     filled: true,
-    fillColor: Colors.grey.shade200,
+    fillColor: Colors.white,
     floatingLabelBehavior: FloatingLabelBehavior.never,
-    border: const OutlineInputBorder(
+    border: OutlineInputBorder(
       borderSide: BorderSide.none,
       borderRadius: borderRadius,
     ),

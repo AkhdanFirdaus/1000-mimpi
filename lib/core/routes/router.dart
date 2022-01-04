@@ -73,6 +73,22 @@ part 'router.gr.dart';
           page: EventPage,
         ),
         AutoRoute(
+          path: 'create',
+          page: EventCreatePage,
+        ),
+        AutoRoute(
+          path: ':id/update',
+          page: EventUpdatePage,
+        ),
+        AutoRoute(
+          path: 'manage',
+          page: EventManagePage,
+        ),
+        AutoRoute(
+          path: 'list',
+          page: EventListPage,
+        ),
+        AutoRoute(
           path: ':id',
           page: EventDetailPage,
         ),
