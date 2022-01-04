@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:relative_scale/relative_scale.dart';
-import 'package:seribu_mimpi/features/home/controllers/calendar_controller.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../core/injection_container.dart';
 import '../../auth/index.dart';
+import '../controllers/calendar_controller.dart';
 import '../widgets/schedule_card_widget.dart';
 
 class HomeSchedulePage extends HookConsumerWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:relative_scale/relative_scale.dart';
-import 'package:seribu_mimpi/core/injection_container.dart';
-import 'package:seribu_mimpi/core/themes/app_color.dart';
-import 'package:seribu_mimpi/features/auth/controllers/user_controller.dart';
+
+import '../../../core/injection_container.dart';
+import '../../auth/index.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);

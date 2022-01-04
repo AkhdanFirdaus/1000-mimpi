@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:relative_scale/relative_scale.dart';
 import 'package:seribu_mimpi/core/injection_container.dart';
+import 'package:seribu_mimpi/features/auth/index.dart';
+import 'package:seribu_mimpi/features/creator/controllers/creator_controller.dart';
+import 'package:seribu_mimpi/features/event/index.dart';
+import 'package:seribu_mimpi/features/event/models/event.dart';
 import 'package:seribu_mimpi/features/event/widgets/event_card_widget.dart';
 
-class EventListPage extends StatelessWidget {
+class EventListPage extends HookConsumerWidget {
   const EventListPage({Key? key, @QueryParam('title') this.title = "Event"})
       : super(key: key);
 
   final String title;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userId = ref.watch(userProvider).maybeMap(
+          user: (user) => user.id,
+          orElse: () => -1,
+        );
+    late AsyncValue<List<Event>> data;
+    if (title.contains('Diikuti')) {
+      data = ref.watch(joinedevEntFutureProvider(userId));
+    } else {
+      data = ref.watch(creatorEventsFutureProvider(userId));
+    }
+
     return RelativeBuilder(
       builder: (context, width, height, sy, sx) {
         return Container(
@@ -23,40 +39,67 @@ class EventListPage extends StatelessWidget {
           child: Scaffold(
             backgroundColor: Colors.transparent,
             body: SafeArea(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-                    child: Row(
-                      children: [
-                        BackButton(
-                          onPressed: () {
-                            getIt<AppRouter>().pop();
-                          },
+              child: data.when(
+                data: (data) {
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                        child: Row(
+                          children: [
+                            BackButton(
+                              onPressed: () {
+                                getIt<AppRouter>().pop();
+                              },
+                            ),
+                            Text(title),
+                          ],
                         ),
-                        Text(title)
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.all(24),
-                      itemCount: 4,
-                      separatorBuilder: (_, __) => const SizedBox(height: 24),
-                      itemBuilder: (context, index) {
-                        if (title.contains('Kelola')) {
-                          return EventManageCardWidget(id: index);
-                        }
+                      ),
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: () {
+                            if (title.contains('Diikuti')) {
+                              ref.refresh(joinedevEntFutureProvider(userId));
+                            } else {
+                              ref.refresh(creatorEventsFutureProvider(userId));
+                            }
+                            return Future.value();
+                          },
+                          child: ListView.separated(
+                            padding: const EdgeInsets.all(24),
+                            itemCount: data.length,
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(height: 24),
+                            itemBuilder: (context, index) {
+                              if (title.contains('Kelola')) {
+                                return EventManageCardWidget(
+                                    event: data[index]);
+                              }
 
-                        if (title.contains('Diikuti')) {
-                          return EventCardJoinedWidget(id: index);
-                        }
+                              if (title.contains('Diikuti')) {
+                                return EventCardJoinedWidget(
+                                    event: data[index]);
+                              }
 
-                        return EventCardWidget(id: index);
-                      },
-                    ),
-                  ),
-                ],
+                              return EventCardWidget(event: data[index]);
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                error: (error, s) {
+                  return Center(
+                    child: Text(error.toString()),
+                  );
+                },
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
             ),
           ),

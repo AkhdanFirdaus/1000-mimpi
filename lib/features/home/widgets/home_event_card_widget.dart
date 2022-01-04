@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:seribu_mimpi/core/injection_container.dart';
+import 'package:seribu_mimpi/features/event/index.dart';
 
 class HomeEventCardWidget extends StatelessWidget {
   const HomeEventCardWidget({
     Key? key,
-    required this.id,
+    required this.event,
   }) : super(key: key);
 
-  final int id;
+  final Event event;
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +20,26 @@ class HomeEventCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text("27/03/01"),
+                ListTile(
+                  leading: const Icon(Icons.calendar_today),
+                  title: Text(event.tanggal),
                 ),
                 ListTile(
                   title: Text(
-                    "Nama Webinar",
-                    style: Theme.of(context).textTheme.headline5,
+                    event.nama,
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  subtitle: const Text("Kapasitas 10/20"),
+                  subtitle: Text("Kapasitas ${event.kuota}"),
                 ),
               ],
             ),
           ),
           const Divider(),
           ListTile(
-            title: const Text("Penyelenggara"),
+            title: Text(event.penyelenggara.name),
             trailing: IconButton(
               onPressed: () {
-                getIt<AppRouter>().pushNamed('event/$id');
+                getIt<AppRouter>().pushNamed('event/${event.id}');
               },
               icon: const Icon(Icons.chevron_right),
             ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:relative_scale/relative_scale.dart';
-import 'package:seribu_mimpi/core/themes/app_color.dart';
-import 'package:seribu_mimpi/features/event/widgets/event_card_widget.dart';
+
+import '../../../core/themes/app_color.dart';
+import '../../auth/index.dart';
+import '../../creator/controllers/creator_controller.dart';
+import '../../event/widgets/event_card_widget.dart';
 
 class SelectedWidget extends HookConsumerWidget {
   const SelectedWidget({
@@ -15,24 +17,42 @@ class SelectedWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final length = useState<int>(2);
+    final userId = ref.watch(userProvider).maybeMap(
+          user: (user) => user.id,
+          orElse: () => -1,
+        );
+    final data = ref.watch(creatorEventsFutureProvider(userId));
     return RelativeBuilder(
       builder: (context, width, height, sy, sx) {
-        return length.value > 0
-            ? ListView.separated(
-                padding: const EdgeInsets.all(36),
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  if (type != 0) {
-                    return EventCardJoinedWidget(id: index);
-                  }
-                  return EventCardWidget(id: index);
-                },
-                separatorBuilder: (_, __) => const SizedBox(height: 24),
-                itemCount: 4,
-                shrinkWrap: true,
-              )
-            : const NotSelectedWidget(text: 'tidak ada item');
+        return data.when(
+          data: (data) {
+            return data.isNotEmpty
+                ? ListView.separated(
+                    padding: const EdgeInsets.all(36),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      if (type != 0) {
+                        return EventCardJoinedWidget(event: data[index]);
+                      }
+                      return EventCardWidget(event: data[index]);
+                    },
+                    separatorBuilder: (_, __) => const SizedBox(height: 24),
+                    itemCount: data.length,
+                    shrinkWrap: true,
+                  )
+                : const NotSelectedWidget(text: 'tidak ada item');
+          },
+          error: (error, s) {
+            return Center(
+              child: Text(error.toString()),
+            );
+          },
+          loading: () {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        );
       },
     );
   }

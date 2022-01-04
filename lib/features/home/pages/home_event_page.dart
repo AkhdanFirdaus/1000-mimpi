@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:relative_scale/relative_scale.dart';
 import 'package:seribu_mimpi/core/injection_container.dart';
 import 'package:seribu_mimpi/core/themes/app_color.dart';
+import 'package:seribu_mimpi/features/creator/controllers/creator_controller.dart';
+import 'package:seribu_mimpi/features/event/index.dart';
 import 'package:seribu_mimpi/features/home/widgets/home_event_card_widget.dart';
 
 class HomeEventPage extends StatelessWidget {
@@ -37,7 +40,7 @@ class HomeEventPage extends StatelessWidget {
   }
 }
 
-class HomeEventCreatorWidget extends StatelessWidget {
+class HomeEventCreatorWidget extends HookConsumerWidget {
   const HomeEventCreatorWidget({
     Key? key,
     required this.heightContainer,
@@ -48,9 +51,10 @@ class HomeEventCreatorWidget extends StatelessWidget {
   final double widthItems;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final creators = ref.watch(creatorFutureProvider);
+    AutoRouter.of(context);
     return Container(
-      // color: Colors.white,
       width: double.infinity,
       height: heightContainer,
       padding: const EdgeInsets.symmetric(vertical: 24),
@@ -75,29 +79,50 @@ class HomeEventCreatorWidget extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(24),
-              itemCount: 4,
-              separatorBuilder: (_, __) => const SizedBox(width: 24),
-              itemBuilder: (context, index) {
-                return Container(
-                  color: Colors.white,
-                  width: widthItems,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          color: AppColor.pink,
+            child: creators.when(
+              data: (data) {
+                return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(24),
+                  itemCount: data.length,
+                  separatorBuilder: (_, __) => const SizedBox(width: 24),
+                  itemBuilder: (context, index) {
+                    final item = data[index];
+                    return SizedBox(
+                      width: widthItems,
+                      child: Card(
+                        child: InkWell(
+                          onTap: () {
+                            getIt<AppRouter>().pushNamed('creator/${item.id}');
+                          },
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  color: AppColor.pink,
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(item.name),
+                                subtitle: Text(item.email),
+                                trailing: const Icon(Icons.chevron_right),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      ListTile(
-                        title: Text("Title $index"),
-                        subtitle: Text("Subtitle $index"),
-                        trailing: const Icon(Icons.chevron_right),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
+                );
+              },
+              error: (error, s) {
+                return Center(
+                  child: Text(error.toString()),
+                );
+              },
+              loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               },
             ),
@@ -108,7 +133,7 @@ class HomeEventCreatorWidget extends StatelessWidget {
   }
 }
 
-class HomeEventWidget extends StatelessWidget {
+class HomeEventWidget extends HookConsumerWidget {
   const HomeEventWidget({
     Key? key,
     required this.heightContainer,
@@ -119,7 +144,8 @@ class HomeEventWidget extends StatelessWidget {
   final double widthItems;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final events = ref.watch(eventFutureProvider);
     return Container(
       width: double.infinity,
       height: heightContainer,
@@ -152,17 +178,31 @@ class HomeEventWidget extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              scrollDirection: Axis.horizontal,
-              itemCount: 6,
-              separatorBuilder: (_, __) => const SizedBox(width: 24),
-              itemBuilder: (context, index) {
-                return SizedBox(
-                  width: widthItems,
-                  child: HomeEventCardWidget(
-                    id: index,
-                  ),
+            child: events.when(
+              data: (data) {
+                return ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: data.length,
+                  separatorBuilder: (_, __) => const SizedBox(width: 24),
+                  itemBuilder: (context, index) {
+                    return SizedBox(
+                      width: widthItems,
+                      child: HomeEventCardWidget(
+                        event: data[index],
+                      ),
+                    );
+                  },
+                );
+              },
+              error: (error, s) {
+                return Center(
+                  child: Text(error.toString()),
+                );
+              },
+              loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               },
             ),
