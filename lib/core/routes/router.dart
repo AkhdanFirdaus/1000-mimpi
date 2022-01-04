@@ -29,12 +29,8 @@ part 'router.gr.dart';
           page: SelectUserPage,
         ),
         AutoRoute(
-          path: 'login-user',
+          path: 'login',
           page: LoginPage,
-        ),
-        AutoRoute(
-          path: 'login-creator',
-          page: LoginCreatorPage,
         ),
         AutoRoute(
           path: 'register',
@@ -53,15 +49,15 @@ part 'router.gr.dart';
           page: HomePage,
         ),
         AutoRoute(
-          path: 'event',
+          path: 'home-event',
           page: HomeEventPage,
         ),
         AutoRoute(
-          path: 'schedule',
+          path: 'home-schedule',
           page: HomeSchedulePage,
         ),
         AutoRoute(
-          path: 'profile',
+          path: 'home-profile',
           page: HomeProfilePage,
         ),
       ],

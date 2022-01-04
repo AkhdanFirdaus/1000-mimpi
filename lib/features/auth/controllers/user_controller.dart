@@ -69,7 +69,7 @@ class UserNotifier extends StateNotifier<UserState> {
     }
   }
 
-  Future<void> loginEventOrganizer({
+  Future<void> loginCreator({
     required String email,
     required String password,
   }) async {

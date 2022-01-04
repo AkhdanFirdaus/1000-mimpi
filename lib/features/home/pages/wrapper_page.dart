@@ -18,8 +18,6 @@ class HomeWrapperPage extends StatelessWidget {
         return BottomNavigationBar(
           iconSize: 36,
           type: BottomNavigationBarType.fixed,
-          unselectedItemColor: Colors.grey.shade200,
-          selectedItemColor: Colors.white,
           showUnselectedLabels: false,
           currentIndex: tabsRouter.activeIndex,
           onTap: tabsRouter.setActiveIndex,

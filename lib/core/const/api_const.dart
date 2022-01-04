@@ -1,5 +1,5 @@
 class ApiConst {
-  static const baseUrl = "http://192.168.1.6:8000/api/";
+  static const baseUrl = "http://192.168.1.8:8000/api/";
   static const login = "login";
   static const loginWithId = "login-with-id";
   static const logout = "logout";

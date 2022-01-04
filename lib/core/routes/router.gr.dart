@@ -53,10 +53,6 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const LoginPage());
     },
-    LoginCreatorRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const LoginCreatorPage());
-    },
     RegisterRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const RegisterPage());
@@ -124,20 +120,18 @@ class _$AppRouter extends RootStackRouter {
           RouteConfig(SelectUserRoute.name,
               path: '', parent: AuthWrapperRoute.name),
           RouteConfig(LoginRoute.name,
-              path: 'login-user', parent: AuthWrapperRoute.name),
-          RouteConfig(LoginCreatorRoute.name,
-              path: 'login-creator', parent: AuthWrapperRoute.name),
+              path: 'login', parent: AuthWrapperRoute.name),
           RouteConfig(RegisterRoute.name,
               path: 'register', parent: AuthWrapperRoute.name)
         ]),
         RouteConfig(HomeWrapperRoute.name, path: '', children: [
           RouteConfig(HomeRoute.name, path: '', parent: HomeWrapperRoute.name),
           RouteConfig(HomeEventRoute.name,
-              path: 'event', parent: HomeWrapperRoute.name),
+              path: 'home-event', parent: HomeWrapperRoute.name),
           RouteConfig(HomeScheduleRoute.name,
-              path: 'schedule', parent: HomeWrapperRoute.name),
+              path: 'home-schedule', parent: HomeWrapperRoute.name),
           RouteConfig(HomeProfileRoute.name,
-              path: 'profile', parent: HomeWrapperRoute.name)
+              path: 'home-profile', parent: HomeWrapperRoute.name)
         ]),
         RouteConfig(EventWrapperRoute.name, path: 'event', children: [
           RouteConfig(EventRoute.name,
@@ -237,18 +231,9 @@ class SelectUserRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [LoginPage]
 class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute() : super(LoginRoute.name, path: 'login-user');
+  const LoginRoute() : super(LoginRoute.name, path: 'login');
 
   static const String name = 'LoginRoute';
-}
-
-/// generated route for
-/// [LoginCreatorPage]
-class LoginCreatorRoute extends PageRouteInfo<void> {
-  const LoginCreatorRoute()
-      : super(LoginCreatorRoute.name, path: 'login-creator');
-
-  static const String name = 'LoginCreatorRoute';
 }
 
 /// generated route for
@@ -270,7 +255,7 @@ class HomeRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [HomeEventPage]
 class HomeEventRoute extends PageRouteInfo<void> {
-  const HomeEventRoute() : super(HomeEventRoute.name, path: 'event');
+  const HomeEventRoute() : super(HomeEventRoute.name, path: 'home-event');
 
   static const String name = 'HomeEventRoute';
 }
@@ -278,7 +263,8 @@ class HomeEventRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [HomeSchedulePage]
 class HomeScheduleRoute extends PageRouteInfo<void> {
-  const HomeScheduleRoute() : super(HomeScheduleRoute.name, path: 'schedule');
+  const HomeScheduleRoute()
+      : super(HomeScheduleRoute.name, path: 'home-schedule');
 
   static const String name = 'HomeScheduleRoute';
 }
@@ -286,7 +272,7 @@ class HomeScheduleRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [HomeProfilePage]
 class HomeProfileRoute extends PageRouteInfo<void> {
-  const HomeProfileRoute() : super(HomeProfileRoute.name, path: 'profile');
+  const HomeProfileRoute() : super(HomeProfileRoute.name, path: 'home-profile');
 
   static const String name = 'HomeProfileRoute';
 }
