@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:relative_scale/relative_scale.dart';
 import 'package:seribu_mimpi/core/injection_container.dart';
@@ -11,6 +12,7 @@ class EventPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final searchController = useTextEditingController();
     final events = ref.watch(eventFutureProvider);
     AutoRouter.of(context);
     return RelativeBuilder(
@@ -26,7 +28,12 @@ class EventPage extends HookConsumerWidget {
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: events.when(
-                data: (data) {
+                data: (events) {
+                  final data = events
+                      .where((e) => e.nama
+                          .toLowerCase()
+                          .contains(searchController.text.toLowerCase()))
+                      .toList();
                   return Column(
                     children: [
                       Padding(
@@ -62,8 +69,9 @@ class EventPage extends HookConsumerWidget {
                             ),
                           ],
                         ),
-                        child: const TextField(
-                          decoration: InputDecoration(
+                        child: TextField(
+                          controller: searchController,
+                          decoration: const InputDecoration(
                             label: Text("Cari Event"),
                             suffixIcon: Icon(Icons.search, color: Colors.grey),
                             floatingLabelBehavior: FloatingLabelBehavior.never,
