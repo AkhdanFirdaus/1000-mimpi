@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:relative_scale/relative_scale.dart';
-import 'package:seribu_mimpi/core/injection_container.dart';
-import 'package:seribu_mimpi/features/auth/index.dart';
-import 'package:seribu_mimpi/features/creator/controllers/creator_controller.dart';
-import 'package:seribu_mimpi/features/event/index.dart';
-import 'package:seribu_mimpi/features/event/models/event.dart';
-import 'package:seribu_mimpi/features/event/widgets/event_card_widget.dart';
+
+import '../../../core/injection_container.dart';
+import '../../auth/index.dart';
+import '../../creator/index.dart';
+import '../index.dart';
 
 class EventListPage extends HookConsumerWidget {
   const EventListPage({Key? key, @QueryParam('title') this.title = "Event"})
